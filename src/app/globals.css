@@ -95,3 +95,19 @@ select:focus {
     outline: none;
     border-color: var(--accent);
 }
+
+label {
+    display: inline-flex;
+    flex-direction: column;
+    margin: 0 10px 10px 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+label select {
+    margin-top: 5px;
+}
+
+select {
+    min-width: 120px;
+}

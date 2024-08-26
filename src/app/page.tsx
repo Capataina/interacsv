@@ -17,6 +17,8 @@ type ParsedData = {
     meta: Papa.ParseMeta;
 };
 
+const chartTypes = ['bar', 'line', 'scatter'];
+
 const sampleDatasets = [
     {name: 'Cost of Living', file: 'Cost_of_Living_Index_by_Country_2024.csv'},
     {name: 'Heart Attack Risk', file: 'heart_attack_dataset.csv'},
@@ -28,6 +30,7 @@ export default function Home() {
     const [columns, setColumns] = useState<string[]>([]);
     const [selectedX, setSelectedX] = useState<string>('');
     const [selectedY, setSelectedY] = useState<string>('');
+    const [chartType, setChartType] = useState<string>('bar');
 
     const handleDataParsed = (data: ParsedData) => {
         setParsedData(data);
@@ -64,16 +67,17 @@ export default function Home() {
         const colors = yValues.map(value => {
             const normalizedValue = (value - minValue) / (maxValue - minValue);
 
-            const r = Math.round(normalizedValue * 255);
-            const b = Math.round((1 - normalizedValue) * 255);
-            return `rgb(${r}, 0, ${b})`;
+            const r = Math.round(180 - normalizedValue * 30);
+            const g = Math.round(220 - normalizedValue * 185);
+            const b = Math.round(130 + normalizedValue * 125);
+            return `rgba(${r}, ${g}, ${b}, 0.8)`;
         });
 
 
         return [{
             x: xValues,
             y: yValues,
-            type: 'bar',
+            type: chartType as any,
             name: selectedY,
             marker: {
                 color: colors,
@@ -98,16 +102,30 @@ export default function Home() {
             </div>
             {columns.length > 0 && (
                 <div>
-                    <select value={selectedX} onChange={(e) => setSelectedX(e.target.value)}>
-                        {columns.map(col => (
-                            <option key={col} value={col}>{col}</option>
-                        ))}
-                    </select>
-                    <select value={selectedY} onChange={(e) => setSelectedY(e.target.value)}>
-                        {columns.map(col => (
-                            <option key={col} value={col}>{col}</option>
-                        ))}
-                    </select>
+                    <label>
+                        X-Axis:
+                        <select value={selectedX} onChange={(e) => setSelectedX(e.target.value)}>
+                            {columns.map(col => (
+                                <option key={col} value={col}>{col}</option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Y-Axis:
+                        <select value={selectedY} onChange={(e) => setSelectedY(e.target.value)}>
+                            {columns.map(col => (
+                                <option key={col} value={col}>{col}</option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Chart Type:
+                        <select value={chartType} onChange={(e) => setChartType(e.target.value)}>
+                            {chartTypes.map(type => (
+                                <option key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</option>
+                            ))}
+                        </select>
+                    </label>
                 </div>
             )}
             {typeof window !== 'undefined' && chartData && (
