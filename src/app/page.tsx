@@ -10,12 +10,15 @@ const InteractiveChart = dynamic(() => import('../components/InteractiveChart'),
 });
 
 import Papa from 'papaparse';
+import TrendLineToggles from "../components/TrendLineToggles";
+import {calculateTrendLine} from '../utils/trendLineCalculations';
 
 type ParsedData = {
     data: Array<Record<string, string>>;
     errors: Papa.ParseError[];
     meta: Papa.ParseMeta;
 };
+
 
 const chartTypes = ['bar', 'line', 'scatter'];
 
@@ -31,6 +34,11 @@ export default function Home() {
     const [selectedX, setSelectedX] = useState<string>('');
     const [selectedY, setSelectedY] = useState<string>('');
     const [chartType, setChartType] = useState<string>('bar');
+    const [trendLines, setTrendLines] = useState<Record<string, boolean>>({});
+
+    const handleTrendLineToggle = (type: string, enabled: boolean) => {
+        setTrendLines(prev => ({...prev, [type]: enabled}));
+    };
 
     const handleDataParsed = (data: ParsedData) => {
         setParsedData(data);
@@ -74,15 +82,29 @@ export default function Home() {
         });
 
 
-        return [{
+        const chartData: any[] = [{
             x: xValues,
             y: yValues,
             type: chartType as any,
             name: selectedY,
+            mode: 'markers',
             marker: {
                 color: colors,
+                size: 8
             }
         }];
+
+        // Add trend lines
+        Object.entries(trendLines).forEach(([type, enabled]) => {
+            if (enabled) {
+                const trendLine = calculateTrendLine(xValues, yValues, type as any);
+                if (trendLine) {
+                    chartData.push(trendLine);
+                }
+            }
+        });
+
+        return chartData;
     };
 
     const chartData = prepareChartData();
@@ -147,6 +169,7 @@ export default function Home() {
                     </div>
                     <div style={{width: '30%', padding: '0 20px'}}>
                         <DataInsights data={parsedData?.data || []} selectedColumn={selectedY}/>
+                        {/*<TrendLineToggles onToggle={handleTrendLineToggle}/>*/}
                     </div>
                 </div>
             )}
