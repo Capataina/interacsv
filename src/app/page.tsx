@@ -1,8 +1,13 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import React, {useState, useEffect} from 'react';
 import FileUpload from '../components/FileUpload';
-import InteractiveChart from '../components/InteractiveChart';
+
+const InteractiveChart = dynamic(() => import('../components/InteractiveChart'), {
+    ssr: false,
+});
+
 import Papa from 'papaparse';
 
 type ParsedData = {
@@ -90,7 +95,7 @@ export default function Home() {
                     </select>
                 </div>
             )}
-            {chartData && (
+            {typeof window !== 'undefined' && chartData && (
                 <div style={{width: '100%', height: '500px'}}>
                     <InteractiveChart
                         data={chartData}
