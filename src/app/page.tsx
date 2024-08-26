@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import FileUpload from '../components/FileUpload';
 import DataInsights from '../components/DataInsights';
 
@@ -10,8 +10,11 @@ const InteractiveChart = dynamic(() => import('../components/InteractiveChart'),
 });
 
 import Papa from 'papaparse';
+
+/*
 import TrendLineToggles from "../components/TrendLineToggles";
 import {calculateTrendLine} from '../utils/trendLineCalculations';
+*/
 
 type ParsedData = {
     data: Array<Record<string, string>>;
@@ -34,11 +37,14 @@ export default function Home() {
     const [selectedX, setSelectedX] = useState<string>('');
     const [selectedY, setSelectedY] = useState<string>('');
     const [chartType, setChartType] = useState<string>('bar');
+
+    /*
     const [trendLines, setTrendLines] = useState<Record<string, boolean>>({});
 
     const handleTrendLineToggle = (type: string, enabled: boolean) => {
         setTrendLines(prev => ({...prev, [type]: enabled}));
     };
+    */
 
     const handleDataParsed = (data: ParsedData) => {
         setParsedData(data);
@@ -87,13 +93,18 @@ export default function Home() {
             y: yValues,
             type: chartType as any,
             name: selectedY,
-            mode: 'markers',
+            mode: chartType === 'scatter' ? 'markers' : 'lines',
+            line: {
+                color: 'rgb(75, 192, 192)',
+                width: 2
+            },
             marker: {
                 color: colors,
                 size: 8
             }
         }];
 
+        /*
         // Add trend lines
         Object.entries(trendLines).forEach(([type, enabled]) => {
             if (enabled) {
@@ -103,6 +114,7 @@ export default function Home() {
                 }
             }
         });
+        */
 
         return chartData;
     };
@@ -157,13 +169,22 @@ export default function Home() {
                             data={chartData}
                             layout={{
                                 title: `${selectedY} vs ${selectedX}`,
-                                xaxis: {title: selectedX},
-                                yaxis: {title: selectedY}
+                                xaxis: {
+                                    title: selectedX,
+                                    type: 'category',
+                                    tickangle: 45,
+                                    automargin: true
+                                },
+                                yaxis: {title: selectedY},
+                                showlegend: false,
+                                hovermode: 'closest'
                             }}
                             config={{
                                 toImageButtonOptions: {
                                     filename: `InteraCSV_${selectedY}_vs_${selectedX}`
-                                }
+                                },
+                                displayModeBar: true,
+                                scrollZoom: true
                             }}
                         />
                     </div>

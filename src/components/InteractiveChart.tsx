@@ -58,7 +58,18 @@ const InteractiveChart: React.FC<InteractiveChartProps> = ({data, layout = {}, c
     return (
         <Plot
             data={data}
-            layout={{...defaultLayout, ...layout}}
+            layout={{
+                ...defaultLayout,
+                ...layout,
+                xaxis: {
+                    ...defaultLayout.xaxis,
+                    ...layout.xaxis
+                },
+                yaxis: {
+                    ...defaultLayout.yaxis,
+                    ...layout.yaxis
+                }
+            }}
             config={{...defaultConfig, ...config}}
             style={{width: '100%', height: '100%'}}
         />
