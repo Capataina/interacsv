@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import React, {useState, useEffect} from 'react';
 import FileUpload from '../components/FileUpload';
+import DataInsights from '../components/DataInsights';
 
 const InteractiveChart = dynamic(() => import('../components/InteractiveChart'), {
     ssr: false,
@@ -58,11 +59,25 @@ export default function Home() {
         const xValues = parsedData.data.map(row => row[selectedX]);
         const yValues = parsedData.data.map(row => parseFloat(row[selectedY] || '0'));
 
+        const minValue = Math.min(...yValues);
+        const maxValue = Math.max(...yValues);
+        const colors = yValues.map(value => {
+            const normalizedValue = (value - minValue) / (maxValue - minValue);
+
+            const r = Math.round(normalizedValue * 255);
+            const b = Math.round((1 - normalizedValue) * 255);
+            return `rgb(${r}, 0, ${b})`;
+        });
+
+
         return [{
             x: xValues,
             y: yValues,
-            type: 'bar', // Default to bar chart, will be made optional later
-            name: selectedY
+            type: 'bar',
+            name: selectedY,
+            marker: {
+                color: colors,
+            }
         }];
     };
 
@@ -96,15 +111,20 @@ export default function Home() {
                 </div>
             )}
             {typeof window !== 'undefined' && chartData && (
-                <div style={{width: '100%', height: '500px'}}>
-                    <InteractiveChart
-                        data={chartData}
-                        layout={{
-                            title: `${selectedY} vs ${selectedX}`,
-                            xaxis: {title: selectedX},
-                            yaxis: {title: selectedY}
-                        }}
-                    />
+                <div style={{display: 'flex', width: '100%'}}>
+                    <div style={{width: '70%', height: '500px'}}>
+                        <InteractiveChart
+                            data={chartData}
+                            layout={{
+                                title: `${selectedY} vs ${selectedX}`,
+                                xaxis: {title: selectedX},
+                                yaxis: {title: selectedY}
+                            }}
+                        />
+                    </div>
+                    <div style={{width: '30%', padding: '0 20px'}}>
+                        <DataInsights data={parsedData?.data || []} selectedColumn={selectedY}/>
+                    </div>
                 </div>
             )}
         </main>
