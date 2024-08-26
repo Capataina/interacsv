@@ -138,6 +138,11 @@ export default function Home() {
                                 xaxis: {title: selectedX},
                                 yaxis: {title: selectedY}
                             }}
+                            config={{
+                                toImageButtonOptions: {
+                                    filename: `InteraCSV_${selectedY}_vs_${selectedX}`
+                                }
+                            }}
                         />
                     </div>
                     <div style={{width: '30%', padding: '0 20px'}}>

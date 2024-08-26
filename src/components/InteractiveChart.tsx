@@ -43,7 +43,15 @@ const defaultLayout: Partial<Plotly.Layout> = {
 
 const defaultConfig: Partial<Plotly.Config> = {
     responsive: true,
-    displayModeBar: false, // Hide the modebar for a cleaner look
+    displayModeBar: 'hover',
+    modeBarButtonsToAdd: ['toImage'],
+    toImageButtonOptions: {
+        format: 'png',
+        filename: 'InteraCSV_chart',
+        height: 500,
+        width: 700,
+        scale: 2
+    }
 };
 
 const InteractiveChart: React.FC<InteractiveChartProps> = ({data, layout = {}, config = {}}) => {
