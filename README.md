@@ -18,11 +18,19 @@ InteraCSV is an interactive CSV viewer built with Next.js, TypeScript, and Plotl
 
 ## Technologies Used
 
-- [Next.js](https://nextjs.org/): React framework for building the web application
-- [TypeScript](https://www.typescriptlang.org/): Adds static typing to JavaScript
-- [Plotly.js](https://plotly.com/javascript/): Library for creating interactive charts
-- [Papa Parse](https://www.papaparse.com/): CSV parsing library
-- [React](https://reactjs.org/): JavaScript library for building user interfaces
+- [Next.js](https://nextjs.org/): React framework for building the web application, providing server-side rendering and routing.
+
+- [TypeScript](https://www.typescriptlang.org/): Adds static typing to JavaScript, improving code quality and developer productivity.
+
+- [Plotly.js](https://plotly.com/javascript/): Powers the interactive charts and graphs, enabling dynamic data visualization.
+
+- [Papa Parse](https://www.papaparse.com/): Handles CSV parsing, converting uploaded files into a format for manipulation and visualization.
+
+- [React](https://reactjs.org/): Used for building the user interface components and managing application state.
+
+- [CSS Modules](https://github.com/css-modules/css-modules): Provides scoped and modular CSS for styling components.
+
+- [Vercel](https://vercel.com/): Hosts the application, providing seamless deployment and scaling.
 
 ## Getting Started
 
@@ -45,6 +53,10 @@ To run InteraCSV locally, follow these steps:
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Live Website
+
+You can access the live version of InteraCSV at [https://interacsv.vercel.app/](https://interacsv.vercel.app/). This deployed version allows you to use all features of the application without setting up a local environment.
 
 ## Usage
 
