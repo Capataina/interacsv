@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# InteraCSV
+
+InteraCSV is an interactive CSV viewer built with Next.js, TypeScript, and Plotly. It provides a user-friendly interface for visualizing and analyzing CSV data through various chart types and data insights.
+
+## Features
+
+- [x] CSV File Upload: Users can upload their own CSV files for visualization.
+- [x] Sample Datasets: Pre-loaded sample datasets are available for quick exploration.
+- [x] Interactive Charts: Utilizes Plotly to create interactive bar, line, and scatter plots.
+- [x] Dynamic Axis Selection: Users can choose which columns to display on the X and Y axes.
+- [x] Chart Type Selection: Supports bar, line, and scatter plot types.
+- [x] Data Insights: Provides basic statistical insights for the selected data column.
+- [x] Responsive Design: Ensures a good user experience across different device sizes.
+- [ ] Support for additional file types beyond CSV.
+- [ ] More chart types and visualization options.
+- [ ] Advanced data analytics capabilities with more statistical measures and insights.
+- [ ] Trend line functionality for deeper data analysis.
+
+## Technologies Used
+
+- [Next.js](https://nextjs.org/): React framework for building the web application
+- [TypeScript](https://www.typescriptlang.org/): Adds static typing to JavaScript
+- [Plotly.js](https://plotly.com/javascript/): Library for creating interactive charts
+- [Papa Parse](https://www.papaparse.com/): CSV parsing library
+- [React](https://reactjs.org/): JavaScript library for building user interfaces
 
 ## Getting Started
 
-First, run the development server:
+To run InteraCSV locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/interacsv.git
+   cd interacsv
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+   ```
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+1. Upload a CSV file using the file input or select a sample dataset from the dropdown.
+2. Once data is loaded, use the dropdowns to select which columns to display on the X and Y axes.
+3. Choose a chart type (bar, line, or scatter).
+4. The chart will update automatically based on your selections.
+5. View data insights for the selected Y-axis column on the right side of the chart.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- `components/`: Contains React components like FileUpload, InteractiveChart, and DataInsights.
+- `pages/`: Next.js pages, including the main application page.
+- `public/sample-data/`: Contains sample CSV datasets.
+- `styles/`: Global CSS styles.
+- `utils/`: Utility functions, including trend line calculations.
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions to InteraCSV are welcome! Please feel free to submit a Pull Request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+[MIT License](LICENSE)
